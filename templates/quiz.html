@@ -16,7 +16,7 @@
                 <div class="score-display mb-3">
                     <span class="badge bg-primary">Score: {{ score }}/{{ total_questions }}</span>
                 </div>
-                
+
                 <h5 class="card-title">Translate this sentence into predicate logic:</h5>
                 <p class="card-text sentence-text">{{ question.sentence }}</p>
 
@@ -32,8 +32,17 @@
                         <label for="answer" class="form-label">Your Answer:</label>
                         <input type="text" class="form-control" id="answer" name="answer" 
                                placeholder="Enter your answer here..." required>
-                        <div class="form-text">
-                            Use symbols: ∀ (for all), ∃ (exists), → (implies), ∧ (and), ¬ (not)
+                        <div class="form-text mb-2">
+                            Click the buttons below or use keyboard shortcuts (Alt + letter)
+                        </div>
+                        <div class="logic-symbols btn-group mb-3">
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol="∀" title="For all (Alt+A)">∀</button>
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol="∃" title="Exists (Alt+E)">∃</button>
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol="→" title="Implies (Alt+I)">→</button>
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol="∧" title="And (Alt+D)">∧</button>
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol="¬" title="Not (Alt+N)">¬</button>
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol="(" title="Open parenthesis">(</button>
+                            <button type="button" class="btn btn-outline-secondary symbol-btn" data-symbol=")" title="Close parenthesis">)</button>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit Answer</button>

@@ -46,3 +46,20 @@
 main {
     margin-bottom: 100px;
 }
+
+.logic-symbols {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.symbol-btn {
+    min-width: 2.5rem;
+    font-size: 1.2rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.symbol-btn:hover {
+    background-color: var(--bs-gray-700);
+    border-color: var(--bs-gray-600);
+}
