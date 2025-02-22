@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="quiz-container">
+    {% if question %}
+        <div class="card">
+            <div class="card-header">
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" 
+                         aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ "%.0f"|format(progress) }}%
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="score-display mb-3">
+                    <span class="badge bg-primary">Score: {{ score }}/{{ total_questions }}</span>
+                </div>
+                
+                <h5 class="card-title">Translate this sentence into predicate logic:</h5>
+                <p class="card-text sentence-text">{{ question.sentence }}</p>
+
+                {% if message %}
+                    <div class="alert alert-{{ message.type }} alert-dismissible fade show" role="alert">
+                        {{ message.text }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+
+                <form method="POST" class="mt-4">
+                    <div class="mb-3">
+                        <label for="answer" class="form-label">Your Answer:</label>
+                        <input type="text" class="form-control" id="answer" name="answer" 
+                               placeholder="Enter your answer here..." required>
+                        <div class="form-text">
+                            Use symbols: ∀ (for all), ∃ (exists), → (implies), ∧ (and), ¬ (not)
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Answer</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body text-center">
+                <h3>Quiz Completed!</h3>
+                <p>Final Score: {{ score }}/{{ total_questions }}</p>
+                <a href="/reset" class="btn btn-primary">Start Over</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.sentence-text {
+    font-size: 1.25rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: var(--bs-dark);
+    border-radius: 0.5rem;
+}
+
+.score-display {
+    font-size: 1.2rem;
+}
+
+.form-text {
+    margin-top: 0.5rem;
+    color: var(--bs-info);
+}
+
+.progress {
+    height: 1.5rem !important;
+    background-color: var(--bs-dark);
+}
+
+.progress-bar {
+    background-color: var(--bs-info);
+    transition: width 0.6s ease;
+}
+
+.card {
+    background-color: var(--bs-gray-900);
+    border: 1px solid var(--bs-gray-700);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--bs-gray-900) !important;
+    border-top: 1px solid var(--bs-gray-700);
+}
+
+main {
+    margin-bottom: 100px;
+}
