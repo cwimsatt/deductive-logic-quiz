@@ -1,0 +1,171 @@
+from flask import Flask, render_template, request, session
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a strong random key
+
+# --- Data (Questions, Answers, and Hints) ---
+
+questions = [
+    {
+        "sentence": "All dogs are mammals.",
+        "answer": "∀x(Dog(x) → Mammal(x))",
+        "hints": [
+            "Think about universal quantification (for all).",
+            "You'll need an implication (if-then).",
+            "The general form is: ∀x(P(x) → Q(x))"
+        ]
+    },
+    {
+        "sentence": "Some cats are friendly.",
+        "answer": "∃x(Cat(x) ∧ Friendly(x))",
+        "hints": [
+            "Think about existential quantification (there exists).",
+            "You'll need a conjunction (and).",
+            "The general form is: ∃x(P(x) ∧ Q(x))"
+        ]
+    },
+    {
+        "sentence": "No birds can fly.",
+        "answer": "¬∃x(Bird(x) ∧ Fly(x))",  # Or, equivalently: ∀x(Bird(x) → ¬Fly(x))
+        "hints": [
+            "Consider negation (not).",
+            "This can be expressed using existential quantification or universal quantification.",
+            "Think: 'There does not exist a bird that can fly.'"
+        ]
+    },
+      {
+        "sentence": "If something is a square, then it is a rectangle.",
+        "answer": "∀x(Square(x) → Rectangle(x))",
+        "hints": [
+            "This is a conditional statement.",
+            "Use universal quantification for 'something'.",
+            "The implication (→) represents the 'if-then'."
+        ]
+    },
+    {
+        "sentence": "There is a student who likes logic.",
+        "answer": "∃x(Student(x) ∧ LikesLogic(x))",
+        "hints": [
+            "This requires existential quantification.",
+            "You'll need a conjunction to connect the properties.",
+            "The general form is 'There exists an x such that...'."
+        ]
+    },
+     {
+        "sentence": "All philosophers are not rich.",
+        "answer": "∀x(Philosopher(x) → ¬Rich(x))",
+        "hints":[
+            "This also can be represented as ¬∃x(Philosopher(x) ∧ Rich(x))",
+            "Universal quantification connects Philosopher(x) and Rich(x)",
+            "The general form is 'All X are Y'"
+        ]
+    },
+    {
+        "sentence": "If any student passes the exam, then all students are happy.",
+        "answer": "∃x(Student(x) ∧ PassExam(x)) → ∀y(Student(y) → Happy(y))",
+        "hints": [
+          "This involves both existential and universal quantification.",
+          "The entire statement is a conditional.",
+          "Consider nested quantifiers. The antecedent is an existential statement, and the consequent is a universal statement."
+        ]
+    },
+    {
+      "sentence": "John loves Mary.",
+      "answer": "Loves(John, Mary)",
+      "hints": [
+        "This uses a relation and the use of constants to name individuals",
+        "Format: Predicate(Subject, Object)",
+        "The use of constants are lower case and Predicates are upper case."
+      ]
+    }
+
+]
+
+# --- Helper Functions ---
+
+def get_current_question():
+    """Gets the current question based on the session's progress."""
+    question_index = session.get('question_index', 0)
+    if question_index < len(questions):
+        return questions[question_index]
+    return None  # No more questions
+
+def check_answer(user_answer, correct_answer):
+    """Checks if the user's answer is correct (case-insensitive, ignores extra spaces)."""
+    return user_answer.strip().lower().replace(" ", "") == correct_answer.strip().lower().replace(" ", "")
+
+# --- Routes ---
+
+@app.route('/', methods=['GET', 'POST'])
+def quiz():
+    """Handles the main quiz logic."""
+
+    if request.method == 'POST':
+        user_answer = request.form['answer']
+        question = get_current_question()
+
+        if question:  # Make sure there's a valid question
+            if check_answer(user_answer, question['answer']):
+                session['question_index'] = session.get('question_index', 0) + 1
+                session['hint_index'] = 0  # Reset hint index for the next question
+                message = "Correct!  Next question..."
+                next_question = get_current_question()  # Get the *next* question
+                if not next_question:
+                    message = "Congratulations! You've completed the quiz."
+                return render_template('quiz.html', question=next_question, message=message)
+
+            else:
+                session['hint_index'] = session.get('hint_index', 0) + 1
+                hint_index = session['hint_index']
+                hints = question['hints']
+                if hint_index <= len(hints):
+                    hint = hints[hint_index - 1]  # Adjust index for display
+                    message = f"Incorrect.  Hint {hint_index}: {hint}"
+                else:
+                    message = f"Incorrect. The correct answer was: {question['answer']}"
+                    # Consider moving to the next question automatically after showing the answer,
+                    # or providing a button to proceed.
+                    session['question_index'] = session.get('question_index', 0) + 1  # Move to next question
+                    session['hint_index'] = 0
+                    next_question = get_current_question()
+                    if not next_question:
+                         message = "Incorrect. The correct answer was: " + question['answer'] + "<br>Congratulations! You've completed the quiz."
+                    else:
+                        message = f"Incorrect. The correct answer was: {question['answer']}<br> Next question..."
+
+                return render_template('quiz.html', question=question, message=message)
+
+    # GET request or first visit
+    session['question_index'] = 0 # Reset to 0 at the start
+    session['hint_index'] = 0
+    question = get_current_question()
+    return render_template('quiz.html', question=question, message="")
+
+
+@app.route('/reset')
+def reset():
+    """Resets the quiz."""
+    session.clear()  # Clear all session data
+    return redirect('/')
+
+# --- HTML Template (templates/quiz.html) ---
+@app.route('/next_question', methods=['POST'])
+def next_question():
+    """
+        Handles move to next question
+    """
+    question = get_current_question()
+    # print("question is", question)
+    session['question_index'] = session.get('question_index', 0) + 1
+    session['hint_index'] = 0
+    next_question = get_current_question()
+    if not next_question:
+        message = "Congratulations! You've completed the quiz."
+    else:
+        message = "Moving to the next question"
+    return render_template('quiz.html', question=next_question, message=message)
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)  # Set debug=False for production
