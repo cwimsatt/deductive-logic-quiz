@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "fallback_secret_key")
-app.permanent_session_lifetime = datetime.timedelta(days=180)  
+app.permanent_session_lifetime = timedelta(days=180)  
 
 # Questions data structure
 questions = [
