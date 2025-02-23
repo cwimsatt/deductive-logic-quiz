@@ -21,16 +21,16 @@ questions = [
     },
     {
         "sentence": "Some cats are friendly.",
-        "answer": "∃x(Cat(x) ∧ Friendly(x))",
+        "answer": "∃x(Cat(x) & Friendly(x))",
         "hints": [
             "Think about existential quantification (there exists).",
             "You'll need a conjunction (and).",
-            "The general form is: ∃x(P(x) ∧ Q(x))"
+            "The general form is: ∃x(P(x) & Q(x))"
         ]
     },
     {
         "sentence": "No birds can fly.",
-        "answer": "¬∃x(Bird(x) ∧ Fly(x))",
+        "answer": "~∃x(Bird(x) & Fly(x))",
         "hints": [
             "Consider negation (not).",
             "This can be expressed using existential quantification or universal quantification.",
@@ -48,7 +48,7 @@ questions = [
     },
     {
         "sentence": "There is a student who likes logic.",
-        "answer": "∃x(Student(x) ∧ LikesLogic(x))",
+        "answer": "∃x(Student(x) & LikesLogic(x))",
         "hints": [
             "This requires existential quantification.",
             "You'll need a conjunction to connect the properties.",
@@ -75,29 +75,29 @@ questions = [
     },
     {
         "sentence": "Some Canadians are friendly.",
-        "answer": "∃x(Canadian(x) ∧ Friendly(x))",
+        "answer": "∃x(Canadian(x) & Friendly(x))",
         "hints": [
             "Use existential quantification for 'some'.",
             "Connect the properties with conjunction.",
-            "The general form is ∃x(P(x) ∧ Q(x))"
+            "The general form is ∃x(P(x) & Q(x))"
         ]
     },
     {
         "sentence": "No Canadians are friendly.",
-        "answer": "¬∃x(Canadian(x) ∧ Friendly(x))",
+        "answer": "~∃x(Canadian(x) & Friendly(x))",
         "hints": [
             "This can be written with negation and existential quantification.",
             "Think: 'There does not exist a Canadian who is friendly'.",
-            "Alternative form: ∀x(Canadian(x) → ¬Friendly(x))"
+            "Alternative form: ∀x(Canadian(x) → ~Friendly(x))"
         ]
     },
     {
         "sentence": "All introverts are quiet and thoughtful.",
-        "answer": "∀x(Introvert(x) → (Quiet(x) ∧ Thoughtful(x)))",
+        "answer": "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))",
         "hints": [
             "Use universal quantification for 'all'.",
             "The consequent has a conjunction.",
-            "The general form is ∀x(P(x) → (Q(x) ∧ R(x)))"
+            "The general form is ∀x(P(x) → (Q(x) & R(x)))"
         ]
     },
     {
@@ -111,7 +111,7 @@ questions = [
     },
     {
         "sentence": "All dogs are canines only if some cats are not reptiles.",
-        "answer": "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) ∧ ¬Reptile(x))",
+        "answer": "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ~Reptile(x))",
         "hints": [
             "This is a complex conditional.",
             "Break it down into two parts.",
@@ -120,7 +120,7 @@ questions = [
     },
     {
         "sentence": "Yetis exist if and only if some mammals are bipedal.",
-        "answer": "∃x(Yeti(x)) ↔ ∃x(Mammal(x) ∧ Bipedal(x))",
+        "answer": "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))",
         "hints": [
             "Use biconditional for 'if and only if'.",
             "Both sides use existential quantification.",
@@ -129,7 +129,7 @@ questions = [
     },
     {
         "sentence": "It is not true that either some reptiles have wings or all friendly cats are orange.",
-        "answer": "¬(∃x(Reptile(x) ∧ Wings(x)) ∨ ∀x((Friendly(x) ∧ Cat(x)) → Orange(x)))",
+        "answer": "~(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))",
         "hints": [
             "This is a complex negation.",
             "Break down the disjunction inside the negation.",
@@ -235,27 +235,27 @@ def get_current_question():
 equivalent_answers = {
     "∀x(Dog(x) → Mammal(x))": ["∀x(Dog(x) → Mammal(x))", "∀x(Dog(x) → Mammal(x))", "∀x(Dog(x) → Mammal(x))"],
     "∃x(Cat(x) & Friendly(x))": ["∃x(Cat(x) & Friendly(x))", "∃x(Cat(x) & Friendly(x))", "∃x(Cat(x) & Friendly(x))"],
-    "¬∃x(Bird(x) & Fly(x))": ["¬∃x(Bird(x) & Fly(x))", "¬∃x(Bird(x) & Fly(x))", "¬∃x(Bird(x) & Fly(x))"],
+    "~∃x(Bird(x) & Fly(x))": ["~∃x(Bird(x) & Fly(x))", "~∃x(Bird(x) & Fly(x))", "~∃x(Bird(x) & Fly(x))"],
     "∀x(Square(x) → Rectangle(x))": ["∀x(Square(x) → Rectangle(x))", "∀x(Square(x) → Rectangle(x))", "∀x(Square(x) → Rectangle(x))"],
     "∃x(Student(x) & LikesLogic(x))": ["∃x(Student(x) & LikesLogic(x))", "∃x(Student(x) & LikesLogic(x))", "∃x(Student(x) & LikesLogic(x))"],
     "Scientist(b) ∨ Novelist(b)": ["Scientist(b) ∨ Novelist(b)", "Scientist(b) ∨ Novelist(b)", "Scientist(b) ∨ Novelist(b)"],
     "Novelist(b) → Scientist(h)": ["Novelist(b) → Scientist(h)", "Novelist(b) → Scientist(h)", "Novelist(b) → Scientist(h)"],
     "∃x(Canadian(x) & Friendly(x))": ["∃x(Canadian(x) & Friendly(x))", "∃x(Canadian(x) & Friendly(x))", "∃x(Canadian(x) & Friendly(x))"],
-    "¬∃x(Canadian(x) & Friendly(x))": ["¬∃x(Canadian(x) & Friendly(x))", "¬∃x(Canadian(x) & Friendly(x))", "¬∃x(Canadian(x) & Friendly(x))"],
+    "~∃x(Canadian(x) & Friendly(x))": ["~∃x(Canadian(x) & Friendly(x))", "~∃x(Canadian(x) & Friendly(x))", "~∃x(Canadian(x) & Friendly(x))"],
     "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))": ["∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))", "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))", "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))"],
     "∀x(President(x) → (Democrat(x) ∨ Republican(x)))": ["∀x(President(x) → (Democrat(x) ∨ Republican(x)))", "∀x(President(x) → (Democrat(x) ∨ Republican(x)))", "∀x(President(x) → (Democrat(x) ∨ Republican(x)))"],
-    "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))": ["∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))"],
+    "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ~Reptile(x))": ["∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ~Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ~Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ~Reptile(x))"],
     "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))": ["∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))", "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))", "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))"],
-    "¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))": ["¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))", "¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))", "¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))"],
+    "~(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))": ["~(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))", "~(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))", "~(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))"],
     "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))": ["∀x(Student(x) → (Freshman(x) ∨ Senior(x)))", "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))", "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))"],
     "Rio": ["Rio", "Rio", "Rio"],
     "Fai ∨ Fac": ["Fai ∨ Fac", "Fai ∨ Fac", "Fai ∨ Fac"],
     "Lhu → Lnh": ["Lhu → Lnh", "Lhu → Lnh", "Lhu → Lnh"],
-    "∀x¬Aix": ["∀x¬Aix", "∀x¬Aix", "∀x¬Aix"],
+    "∀x~Aix": ["∀x~Aix", "∀x~Aix", "∀x~Aix"],
     "∀x(Aix → Yx)": ["∀x(Aix → Yx)", "∀x(Aix → Yx)", "∀x(Aix → Yx)"],
     "∀x(Ebx → Hx)": ["∀x(Ebx → Hx)", "∀x(Ebx → Hx)", "∀x(Ebx → Hx)"],
-    "∃x[Px & (∀y)¬Sxy]": ["∃x[Px & (∀y)¬Sxy]", "∃x[Px & (∀y)¬Sxy]", "∃x[Px & (∀y)¬Sxy]"],
-    "∀x[Px → (∃y)¬Sxy]": ["∀x[Px → (∃y)¬Sxy]", "∀x[Px → (∃y)¬Sxy]", "∀x[Px → (∃y)¬Sxy]"]
+    "∃x[Px & (∀y)~Sxy]": ["∃x[Px & (∀y)~Sxy]", "∃x[Px & (∀y)~Sxy]", "∃x[Px & (∀y)~Sxy]"],
+    "∀x[Px → (∃y)~Sxy]": ["∀x[Px → (∃y)~Sxy]", "∀x[Px → (∃y)~Sxy]", "∀x[Px → (∃y)~Sxy]"]
 }
 
 def check_answer(user_answer, correct_answer):
