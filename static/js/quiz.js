@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'e': '∃',  // Alt + E for existential quantifier
                 'i': '→',  // Alt + I for implies
                 'n': '¬',  // Alt + N for not
-                'd': '∧'   // Alt + D for and
+                'd': '∧',  // Alt + D for and
+                'o': '∨'   // Alt + O for or
             };
 
             if (e.altKey && shortcuts[e.key.toLowerCase()]) {
