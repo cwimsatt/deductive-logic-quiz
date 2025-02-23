@@ -233,9 +233,11 @@ many_place_questions = [
 
 def get_current_question():
     """Gets the current question based on the session's progress."""
-    question_set = session.get('question_set', 'basic_translation')
+    if 'user_state' not in session:
+        return None
+    question_set = session['user_state'].get('question_set', 'basic_translation')
     questions_list = many_place_questions if question_set == 'many_place' else questions
-    question_index = session.get('question_index', 0)
+    question_index = session['user_state'].get('question_index', 0)
     if question_index < len(questions_list):
         return questions_list[question_index]
     return None
@@ -329,8 +331,8 @@ def quiz():
             return render_template('quiz.html', 
                                     question=get_current_question(), 
                                     message=message,
-                                    progress=(session.get('question_index', 0) / len(questions)) * 100,
-                                    score=session['score'],
+                                    progress=(session['user_state'].get('question_index', 0) / len(questions)) * 100,
+                                    score=session['user_state']['score'],
                                     total_questions=len(questions))
 
     # Initial load or reset
