@@ -270,7 +270,8 @@ def check_answer(user_answer, correct_answer):
 def quiz():
     """Handles the main quiz logic."""
     # Initialize session variables if not present
-    if 'user_state' not in session:
+    if not session.get('user_state'):
+        session.permanent = True
         session['user_state'] = {
             'score': 0,
             'total_attempts': 0,
@@ -280,7 +281,7 @@ def quiz():
             'last_answer': '',
             'timestamp': datetime.now().timestamp()
         }
-    
+
     # Session expiry check (optional, set to 24 hours)
     if time.time() - session['user_state'].get('timestamp', 0) > 86400:
         session['user_state'] = {
