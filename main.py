@@ -3,13 +3,19 @@ from flask import Flask, render_template, request, session, redirect
 import logging
 from datetime import datetime, timedelta
 import time
+from flask_session import Session
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "fallback_secret_key")
-app.permanent_session_lifetime = timedelta(days=180)  
+app.permanent_session_lifetime = timedelta(days=180)
+
+# Configure Flask-Session
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = '.flask_session'
+Session(app)  
 
 # Questions data structure
 questions = [
