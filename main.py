@@ -346,14 +346,20 @@ def quiz():
             'last_answer': '',
             'timestamp': datetime.now().timestamp()
         }
-        session.modified = True
-
+    
+    # Get the correct total questions count based on question set
+    question_set = session['user_state'].get('question_set', 'basic_translation')
+    total_questions = len(many_place_questions if question_set == 'many_place' else questions)
+    
+    # Calculate progress based on current state
+    progress = (session['user_state'].get('question_index', 0) / total_questions) * 100 if total_questions > 0 else 0
+    
     return render_template('quiz.html', 
                             question=get_current_question(),
                             message=None,
-                            progress=0,
-                            score=0,
-                            total_questions=len(questions))
+                            progress=progress,
+                            score=session['user_state'].get('score', 0),
+                            total_questions=total_questions)
 
 @app.route('/reset')
 def reset():
