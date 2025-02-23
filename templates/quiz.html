@@ -29,7 +29,10 @@
 
                 <form method="POST" class="mt-4">
                     <div class="mb-3">
-                        <label for="answer" class="form-label">Your Answer:</label>
+                        <div class="d-flex align-items-center">
+                            <label for="answer" class="form-label mb-0">Your Answer:</label>
+                            <small class="text-muted ms-2">(e.g., ∀x(P(x) → Q(x)) or ∃x(P(x) ∧ Q(x)))</small>
+                        </div>
                         <input type="text" class="form-control" id="answer" name="answer" 
                                placeholder="Enter your answer here..." required>
                         <div class="form-text mb-2">
