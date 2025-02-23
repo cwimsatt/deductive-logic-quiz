@@ -147,11 +147,88 @@ questions = [
     }
 ]
 
+many_place_questions = [
+    {
+        "sentence": "Iris reads the Odyssey.",
+        "answer": "Rio",
+        "hints": [
+            "This is a two-place predicate.",
+            "Use capital letters for the predicates and lowercase for constants.",
+            "The first constant represents the subject, the second the object."
+        ]
+    },
+    {
+        "sentence": "Arielle is a friend of either Inez or Claudia.",
+        "answer": "Fai ∨ Fac",
+        "hints": [
+            "Use F for 'friend of'",
+            "Use lowercase letters for the constants: a (Arielle), i (Inez), c (Claudia)",
+            "Connect the two possibilities with OR (∨)"
+        ]
+    },
+    {
+        "sentence": "Nigel loathes Hubert if Hubert loathes Uriah.",
+        "answer": "Lhu → Lnh",
+        "hints": [
+            "Use L for 'loathes'",
+            "Use lowercase letters for constants: n (Nigel), h (Hubert), u (Uriah)",
+            "This is a conditional statement using →"
+        ]
+    },
+    {
+        "sentence": "Iris is not afraid of anything.",
+        "answer": "∀x~Aix",
+        "hints": [
+            "This involves universal quantification and negation.",
+            "A stands for 'afraid of'",
+            "i represents Iris"
+        ]
+    },
+    {
+        "sentence": "All things Iris is afraid of are yellow.",
+        "answer": "∀x(Aix → Yx)",
+        "hints": [
+            "This involves universal quantification.",
+            "Use A for 'afraid of' and Y for 'yellow'",
+            "i represents Iris"
+        ]
+    },
+    {
+        "sentence": "Barnabas eats only healthy items.",
+        "answer": "∀x(Ebx → Hx)",
+        "hints": [
+            "Use E for 'eats' and H for 'healthy'",
+            "b represents Barnabas",
+            "The quantifier ranges over the items eaten"
+        ]
+    },
+    {
+        "sentence": "Some people cannot sell anything.",
+        "answer": "∃x[Px & (∀y)~Sxy]",
+        "hints": [
+            "This involves both existential and universal quantification.",
+            "P stands for 'person', S for 'can sell'",
+            "Use & for conjunction"
+        ]
+    },
+    {
+        "sentence": "No person can sell everything.",
+        "answer": "∀x[Px → (∃y)~Sxy]",
+        "hints": [
+            "This can be written in two ways.",
+            "Alternative form: ~(∃x)[Px & (∀y)Sxy]",
+            "P stands for 'person', S for 'can sell'"
+        ]
+    }
+]
+
 def get_current_question():
     """Gets the current question based on the session's progress."""
+    question_set = session.get('question_set', 'basic_translation')
+    questions_list = many_place_questions if question_set == 'many_place' else questions
     question_index = session.get('question_index', 0)
-    if question_index < len(questions):
-        return questions[question_index]
+    if question_index < len(questions_list):
+        return questions_list[question_index]
     return None
 
 def check_answer(user_answer, correct_answer):
@@ -189,31 +266,42 @@ def quiz():
                     message = {"text": f"The correct answer was: {question['answer']}", "type": "danger"}
                     session['question_index'] = session.get('question_index', 0) + 1
                     session['hint_index'] = 0
-                    
+
             return render_template('quiz.html', 
-                                question=get_current_question(), 
-                                message=message,
-                                progress=(session.get('question_index', 0) / len(questions)) * 100,
-                                score=session['score'],
-                                total_questions=len(questions))
+                                    question=get_current_question(), 
+                                    message=message,
+                                    progress=(session.get('question_index', 0) / len(questions)) * 100,
+                                    score=session['score'],
+                                    total_questions=len(questions))
 
     # Initial load or reset
     session['question_index'] = 0
     session['hint_index'] = 0
     session['score'] = 0
     session['total_attempts'] = 0
-    
+
     return render_template('quiz.html', 
-                         question=get_current_question(),
-                         message=None,
-                         progress=0,
-                         score=0,
-                         total_questions=len(questions))
+                            question=get_current_question(),
+                            message=None,
+                            progress=0,
+                            score=0,
+                            total_questions=len(questions))
 
 @app.route('/reset')
 def reset():
     """Resets the quiz."""
     session.clear()
+    return redirect('/')
+
+@app.route('/set_question_type', methods=['POST'])
+def set_question_type():
+    """Sets the type of questions to display."""
+    question_type = request.form.get('type', 'basic_translation')
+    session['question_set'] = question_type
+    session['question_index'] = 0
+    session['hint_index'] = 0
+    session['score'] = 0
+    session['total_attempts'] = 0
     return redirect('/')
 
 if __name__ == '__main__':
