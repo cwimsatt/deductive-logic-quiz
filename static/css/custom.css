@@ -63,3 +63,32 @@ main {
     background-color: var(--bs-gray-700);
     border-color: var(--bs-gray-600);
 }
+
+/* New styles for category selection */
+.category-buttons {
+    gap: 1rem;
+}
+
+.category-buttons .btn {
+    margin: 0 0.5rem;
+}
+
+.category-btn.active {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+.subcategory-buttons .btn {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.subcategory-btn.active {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+/* Hide quiz container initially */
+.quiz-container.hidden {
+    display: none;
+}
