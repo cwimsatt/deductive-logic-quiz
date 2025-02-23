@@ -306,24 +306,25 @@ def quiz():
         question = get_current_question()
 
         if question:
-            session['total_attempts'] += 1
+            session['user_state']['total_attempts'] += 1
             if check_answer(user_answer, question['answer']):
-                session['score'] += 1
-                session['question_index'] = session.get('question_index', 0) + 1
-                session['hint_index'] = 0
+                session['user_state']['score'] += 1
+                session['user_state']['question_index'] = session['user_state'].get('question_index', 0) + 1
+                session['user_state']['hint_index'] = 0
                 message = {"text": "Correct! Moving to next question...", "type": "success"}
                 next_question = get_current_question()
                 if not next_question:
-                    message = {"text": f"Congratulations! Quiz completed. Score: {session['score']}/{len(questions)}", "type": "success"}
+                    message = {"text": f"Congratulations! Quiz completed. Score: {session['user_state']['score']}/{len(questions)}", "type": "success"}
             else:
-                session['hint_index'] = session.get('hint_index', 0) + 1
-                hint_index = session['hint_index']
+                session['user_state']['hint_index'] = session['user_state'].get('hint_index', 0) + 1
+                hint_index = session['user_state']['hint_index']
                 if hint_index <= len(question['hints']):
                     message = {"text": f"Hint {hint_index}: {question['hints'][hint_index - 1]}", "type": "warning"}
                 else:
                     message = {"text": f"The correct answer was: {question['answer']}", "type": "danger"}
-                    session['question_index'] = session.get('question_index', 0) + 1
-                    session['hint_index'] = 0
+                    session['user_state']['question_index'] = session['user_state'].get('question_index', 0) + 1
+                    session['user_state']['hint_index'] = 0
+            session.modified = True
 
             return render_template('quiz.html', 
                                     question=get_current_question(), 
@@ -333,10 +334,17 @@ def quiz():
                                     total_questions=len(questions))
 
     # Initial load or reset
-    session['question_index'] = 0
-    session['hint_index'] = 0
-    session['score'] = 0
-    session['total_attempts'] = 0
+    if 'user_state' not in session:
+        session['user_state'] = {
+            'question_index': 0,
+            'hint_index': 0,
+            'score': 0,
+            'total_attempts': 0,
+            'question_set': 'basic_translation',
+            'last_answer': '',
+            'timestamp': datetime.now().timestamp()
+        }
+        session.modified = True
 
     return render_template('quiz.html', 
                             question=get_current_question(),
