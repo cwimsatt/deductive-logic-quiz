@@ -374,15 +374,41 @@ def reset():
 def set_question_type():
     """Sets the type of questions to display."""
     question_type = request.form.get('type', 'basic_translation')
+    
+    # Initialize if user_state doesn't exist
+    if 'user_state' not in session:
+        session['user_state'] = {}
+        
+    # Save current progress
+    current_type = session['user_state'].get('question_set', 'basic_translation')
+    if current_type not in session:
+        session[current_type] = {
+            'score': session['user_state'].get('score', 0),
+            'total_attempts': session['user_state'].get('total_attempts', 0),
+            'question_index': session['user_state'].get('question_index', 0),
+            'hint_index': session['user_state'].get('hint_index', 0)
+        }
+    
+    # Load progress for selected type or initialize new
+    if question_type not in session:
+        session[question_type] = {
+            'score': 0,
+            'total_attempts': 0,
+            'question_index': 0,
+            'hint_index': 0
+        }
+    
+    # Update user_state with saved progress
     session['user_state'] = {
-        'score': 0,
-        'total_attempts': 0,
-        'question_index': 0,
-        'hint_index': 0,
+        'score': session[question_type]['score'],
+        'total_attempts': session[question_type]['total_attempts'],
+        'question_index': session[question_type]['question_index'],
+        'hint_index': session[question_type]['hint_index'],
         'question_set': question_type,
         'last_answer': '',
         'timestamp': datetime.now().timestamp()
     }
+    session.modified = True
     return redirect('/')
 
 if __name__ == '__main__':
