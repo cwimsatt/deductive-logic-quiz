@@ -39,6 +39,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    function switchQuestionType(type) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/set_question_type';
+
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'type';
+        input.value = type;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
     function updateSubcategories(category) {
         // Clear existing subcategories
         subcategoryContainer.innerHTML = '';
@@ -49,18 +64,40 @@ document.addEventListener('DOMContentLoaded', function() {
             button.className = 'btn btn-outline-secondary subcategory-btn';
             button.textContent = subcategory;
 
-            // For predicate logic's basic translation, make it functional
-            if (category === 'predicate-logic' && subcategory === 'Basic Translation') {
-                button.classList.add('active');
-                if (quizContainer) quizContainer.classList.remove('hidden');
-                button.addEventListener('click', () => {
-                    document.querySelectorAll('.subcategory-btn').forEach(btn => 
-                        btn.classList.remove('active'));
-                    button.classList.add('active');
-                    if (quizContainer) quizContainer.classList.remove('hidden');
-                });
+            // Handle predicate logic subcategories
+            if (category === 'predicate-logic') {
+                if (subcategory === 'Basic Translation') {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.subcategory-btn').forEach(btn => 
+                            btn.classList.remove('active'));
+                        button.classList.add('active');
+                        if (quizContainer) {
+                            quizContainer.classList.remove('hidden');
+                            switchQuestionType('basic_translation');
+                        }
+                    });
+                } else if (subcategory === 'Many Place Translation') {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.subcategory-btn').forEach(btn => 
+                            btn.classList.remove('active'));
+                        button.classList.add('active');
+                        if (quizContainer) {
+                            quizContainer.classList.remove('hidden');
+                            switchQuestionType('many_place');
+                        }
+                    });
+                } else {
+                    // Placeholder buttons
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.subcategory-btn').forEach(btn => 
+                            btn.classList.remove('active'));
+                        button.classList.add('active');
+                        if (quizContainer) quizContainer.classList.add('hidden');
+                        alert('This section is coming soon!');
+                    });
+                }
             } else {
-                // Placeholder buttons
+                // Placeholder buttons for other categories
                 button.addEventListener('click', () => {
                     document.querySelectorAll('.subcategory-btn').forEach(btn => 
                         btn.classList.remove('active'));
