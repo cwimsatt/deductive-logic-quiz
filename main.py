@@ -54,6 +54,96 @@ questions = [
             "You'll need a conjunction to connect the properties.",
             "The general form is 'There exists an x such that...'."
         ]
+    },
+    {
+        "sentence": "Beatrice is a scientist or a novelist.",
+        "answer": "Scientist(b) ∨ Novelist(b)",
+        "hints": [
+            "This is a disjunction (or) statement.",
+            "Use individual constants for named individuals.",
+            "The general form is P(b) ∨ Q(b)"
+        ]
+    },
+    {
+        "sentence": "Hermione is a scientist if Beatrice is a novelist.",
+        "answer": "Novelist(b) → Scientist(h)",
+        "hints": [
+            "This is a conditional statement.",
+            "Use individual constants for named individuals.",
+            "The general form is P(b) → Q(h)"
+        ]
+    },
+    {
+        "sentence": "Some Canadians are friendly.",
+        "answer": "∃x(Canadian(x) ∧ Friendly(x))",
+        "hints": [
+            "Use existential quantification for 'some'.",
+            "Connect the properties with conjunction.",
+            "The general form is ∃x(P(x) ∧ Q(x))"
+        ]
+    },
+    {
+        "sentence": "No Canadians are friendly.",
+        "answer": "¬∃x(Canadian(x) ∧ Friendly(x))",
+        "hints": [
+            "This can be written with negation and existential quantification.",
+            "Think: 'There does not exist a Canadian who is friendly'.",
+            "Alternative form: ∀x(Canadian(x) → ¬Friendly(x))"
+        ]
+    },
+    {
+        "sentence": "All introverts are quiet and thoughtful.",
+        "answer": "∀x(Introvert(x) → (Quiet(x) ∧ Thoughtful(x)))",
+        "hints": [
+            "Use universal quantification for 'all'.",
+            "The consequent has a conjunction.",
+            "The general form is ∀x(P(x) → (Q(x) ∧ R(x)))"
+        ]
+    },
+    {
+        "sentence": "Only Democrats and Republicans can be president.",
+        "answer": "∀x(President(x) → (Democrat(x) ∨ Republican(x)))",
+        "hints": [
+            "Use universal quantification.",
+            "The consequent has a disjunction.",
+            "Think about the logical form of 'only'"
+        ]
+    },
+    {
+        "sentence": "All dogs are canines only if some cats are not reptiles.",
+        "answer": "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) ∧ ¬Reptile(x))",
+        "hints": [
+            "This is a complex conditional.",
+            "Break it down into two parts.",
+            "Use both universal and existential quantification"
+        ]
+    },
+    {
+        "sentence": "Yetis exist if and only if some mammals are bipedal.",
+        "answer": "∃x(Yeti(x)) ↔ ∃x(Mammal(x) ∧ Bipedal(x))",
+        "hints": [
+            "Use biconditional for 'if and only if'.",
+            "Both sides use existential quantification.",
+            "The right side needs conjunction"
+        ]
+    },
+    {
+        "sentence": "It is not true that either some reptiles have wings or all friendly cats are orange.",
+        "answer": "¬(∃x(Reptile(x) ∧ Wings(x)) ∨ ∀x((Friendly(x) ∧ Cat(x)) → Orange(x)))",
+        "hints": [
+            "This is a complex negation.",
+            "Break down the disjunction inside the negation.",
+            "Pay attention to the scope of quantifiers"
+        ]
+    },
+    {
+        "sentence": "All students are either freshmen or seniors.",
+        "answer": "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))",
+        "hints": [
+            "Use universal quantification for 'all'.",
+            "The consequent contains a disjunction.",
+            "Think about the structure: if student then (freshman or senior)"
+        ]
     }
 ]
 
