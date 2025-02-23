@@ -1,14 +1,15 @@
 import os
 from flask import Flask, render_template, request, session, redirect
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET", "fallback_secret_key")  
+app.secret_key = os.environ.get("SESSION_SECRET", "fallback_secret_key")
+app.permanent_session_lifetime = datetime.timedelta(days=180)  
 
 # Questions data structure
 questions = [
@@ -283,7 +284,7 @@ def quiz():
         }
 
     # Session expiry check (optional, set to 24 hours)
-    if time.time() - session['user_state'].get('timestamp', 0) > 86400:
+    if time.time() - session['user_state'].get('timestamp', 0) > 15552000:  # 180 days in seconds
         session['user_state'] = {
             'score': 0, 
             'total_attempts': 0,
