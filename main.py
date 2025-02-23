@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, request, session, redirect
 import logging
+from datetime import datetime
+import time
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -267,10 +269,29 @@ def check_answer(user_answer, correct_answer):
 @app.route('/', methods=['GET', 'POST'])
 def quiz():
     """Handles the main quiz logic."""
-    if 'score' not in session:
-        session['score'] = 0
-    if 'total_attempts' not in session:
-        session['total_attempts'] = 0
+    # Initialize session variables if not present
+    if 'user_state' not in session:
+        session['user_state'] = {
+            'score': 0,
+            'total_attempts': 0,
+            'question_index': 0,
+            'hint_index': 0,
+            'question_set': 'basic_translation',
+            'last_answer': '',
+            'timestamp': datetime.now().timestamp()
+        }
+    
+    # Session expiry check (optional, set to 24 hours)
+    if time.time() - session['user_state'].get('timestamp', 0) > 86400:
+        session['user_state'] = {
+            'score': 0, 
+            'total_attempts': 0,
+            'question_index': 0,
+            'hint_index': 0,
+            'question_set': 'basic_translation',
+            'last_answer': '',
+            'timestamp': datetime.now().timestamp()
+        }
 
     if request.method == 'POST':
         user_answer = request.form.get('answer', '')
@@ -319,18 +340,31 @@ def quiz():
 @app.route('/reset')
 def reset():
     """Resets the quiz."""
-    session.clear()
+    if 'user_state' in session:
+        session['user_state'] = {
+            'score': 0,
+            'total_attempts': 0,
+            'question_index': 0,
+            'hint_index': 0,
+            'question_set': 'basic_translation',
+            'last_answer': '',
+            'timestamp': datetime.now().timestamp()
+        }
     return redirect('/')
 
 @app.route('/set_question_type', methods=['POST'])
 def set_question_type():
     """Sets the type of questions to display."""
     question_type = request.form.get('type', 'basic_translation')
-    session['question_set'] = question_type
-    session['question_index'] = 0
-    session['hint_index'] = 0
-    session['score'] = 0
-    session['total_attempts'] = 0
+    session['user_state'] = {
+        'score': 0,
+        'total_attempts': 0,
+        'question_index': 0,
+        'hint_index': 0,
+        'question_set': question_type,
+        'last_answer': '',
+        'timestamp': datetime.now().timestamp()
+    }
     return redirect('/')
 
 if __name__ == '__main__':
