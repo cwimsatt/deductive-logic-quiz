@@ -234,28 +234,28 @@ def get_current_question():
 # Dictionary storing equivalent answers for each question
 equivalent_answers = {
     "∀x(Dog(x) → Mammal(x))": ["∀x(Dog(x) → Mammal(x))", "∀x(Dog(x) → Mammal(x))", "∀x(Dog(x) → Mammal(x))"],
-    "∃x(Cat(x) ∧ Friendly(x))": ["∃x(Cat(x) ∧ Friendly(x))", "∃x(Cat(x) ∧ Friendly(x))", "∃x(Cat(x) ∧ Friendly(x))"],
-    "¬∃x(Bird(x) ∧ Fly(x))": ["¬∃x(Bird(x) ∧ Fly(x))", "¬∃x(Bird(x) ∧ Fly(x))", "¬∃x(Bird(x) ∧ Fly(x))"],
+    "∃x(Cat(x) & Friendly(x))": ["∃x(Cat(x) & Friendly(x))", "∃x(Cat(x) & Friendly(x))", "∃x(Cat(x) & Friendly(x))"],
+    "¬∃x(Bird(x) & Fly(x))": ["¬∃x(Bird(x) & Fly(x))", "¬∃x(Bird(x) & Fly(x))", "¬∃x(Bird(x) & Fly(x))"],
     "∀x(Square(x) → Rectangle(x))": ["∀x(Square(x) → Rectangle(x))", "∀x(Square(x) → Rectangle(x))", "∀x(Square(x) → Rectangle(x))"],
-    "∃x(Student(x) ∧ LikesLogic(x))": ["∃x(Student(x) ∧ LikesLogic(x))", "∃x(Student(x) ∧ LikesLogic(x))", "∃x(Student(x) ∧ LikesLogic(x))"],
+    "∃x(Student(x) & LikesLogic(x))": ["∃x(Student(x) & LikesLogic(x))", "∃x(Student(x) & LikesLogic(x))", "∃x(Student(x) & LikesLogic(x))"],
     "Scientist(b) ∨ Novelist(b)": ["Scientist(b) ∨ Novelist(b)", "Scientist(b) ∨ Novelist(b)", "Scientist(b) ∨ Novelist(b)"],
     "Novelist(b) → Scientist(h)": ["Novelist(b) → Scientist(h)", "Novelist(b) → Scientist(h)", "Novelist(b) → Scientist(h)"],
-    "∃x(Canadian(x) ∧ Friendly(x))": ["∃x(Canadian(x) ∧ Friendly(x))", "∃x(Canadian(x) ∧ Friendly(x))", "∃x(Canadian(x) ∧ Friendly(x))"],
-    "¬∃x(Canadian(x) ∧ Friendly(x))": ["¬∃x(Canadian(x) ∧ Friendly(x))", "¬∃x(Canadian(x) ∧ Friendly(x))", "¬∃x(Canadian(x) ∧ Friendly(x))"],
-    "∀x(Introvert(x) → (Quiet(x) ∧ Thoughtful(x)))": ["∀x(Introvert(x) → (Quiet(x) ∧ Thoughtful(x)))", "∀x(Introvert(x) → (Quiet(x) ∧ Thoughtful(x)))", "∀x(Introvert(x) → (Quiet(x) ∧ Thoughtful(x)))"],
+    "∃x(Canadian(x) & Friendly(x))": ["∃x(Canadian(x) & Friendly(x))", "∃x(Canadian(x) & Friendly(x))", "∃x(Canadian(x) & Friendly(x))"],
+    "¬∃x(Canadian(x) & Friendly(x))": ["¬∃x(Canadian(x) & Friendly(x))", "¬∃x(Canadian(x) & Friendly(x))", "¬∃x(Canadian(x) & Friendly(x))"],
+    "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))": ["∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))", "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))", "∀x(Introvert(x) → (Quiet(x) & Thoughtful(x)))"],
     "∀x(President(x) → (Democrat(x) ∨ Republican(x)))": ["∀x(President(x) → (Democrat(x) ∨ Republican(x)))", "∀x(President(x) → (Democrat(x) ∨ Republican(x)))", "∀x(President(x) → (Democrat(x) ∨ Republican(x)))"],
-    "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) ∧ ¬Reptile(x))": ["∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) ∧ ¬Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) ∧ ¬Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) ∧ ¬Reptile(x))"],
-    "∃x(Yeti(x)) ↔ ∃x(Mammal(x) ∧ Bipedal(x))": ["∃x(Yeti(x)) ↔ ∃x(Mammal(x) ∧ Bipedal(x))", "∃x(Yeti(x)) ↔ ∃x(Mammal(x) ∧ Bipedal(x))", "∃x(Yeti(x)) ↔ ∃x(Mammal(x) ∧ Bipedal(x))"],
-    "¬(∃x(Reptile(x) ∧ Wings(x)) ∨ ∀x((Friendly(x) ∧ Cat(x)) → Orange(x)))": ["¬(∃x(Reptile(x) ∧ Wings(x)) ∨ ∀x((Friendly(x) ∧ Cat(x)) → Orange(x)))", "¬(∃x(Reptile(x) ∧ Wings(x)) ∨ ∀x((Friendly(x) ∧ Cat(x)) → Orange(x)))", "¬(∃x(Reptile(x) ∧ Wings(x)) ∨ ∀x((Friendly(x) ∧ Cat(x)) → Orange(x)))"],
+    "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))": ["∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))", "∀x(Dog(x) → Canine(x)) → ∃x(Cat(x) & ¬Reptile(x))"],
+    "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))": ["∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))", "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))", "∃x(Yeti(x)) ↔ ∃x(Mammal(x) & Bipedal(x))"],
+    "¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))": ["¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))", "¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))", "¬(∃x(Reptile(x) & Wings(x)) ∨ ∀x((Friendly(x) & Cat(x)) → Orange(x)))"],
     "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))": ["∀x(Student(x) → (Freshman(x) ∨ Senior(x)))", "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))", "∀x(Student(x) → (Freshman(x) ∨ Senior(x)))"],
     "Rio": ["Rio", "Rio", "Rio"],
     "Fai ∨ Fac": ["Fai ∨ Fac", "Fai ∨ Fac", "Fai ∨ Fac"],
     "Lhu → Lnh": ["Lhu → Lnh", "Lhu → Lnh", "Lhu → Lnh"],
-    "∀x~Aix": ["∀x~Aix", "∀x~Aix", "∀x~Aix"],
+    "∀x¬Aix": ["∀x¬Aix", "∀x¬Aix", "∀x¬Aix"],
     "∀x(Aix → Yx)": ["∀x(Aix → Yx)", "∀x(Aix → Yx)", "∀x(Aix → Yx)"],
     "∀x(Ebx → Hx)": ["∀x(Ebx → Hx)", "∀x(Ebx → Hx)", "∀x(Ebx → Hx)"],
-    "∃x[Px & (∀y)~Sxy]": ["∃x[Px & (∀y)~Sxy]", "∃x[Px & (∀y)~Sxy]", "∃x[Px & (∀y)~Sxy]"],
-    "∀x[Px → (∃y)~Sxy]": ["∀x[Px → (∃y)~Sxy]", "∀x[Px → (∃y)~Sxy]", "∀x[Px → (∃y)~Sxy]"]
+    "∃x[Px & (∀y)¬Sxy]": ["∃x[Px & (∀y)¬Sxy]", "∃x[Px & (∀y)¬Sxy]", "∃x[Px & (∀y)¬Sxy]"],
+    "∀x[Px → (∃y)¬Sxy]": ["∀x[Px → (∃y)¬Sxy]", "∀x[Px → (∃y)¬Sxy]", "∀x[Px → (∃y)¬Sxy]"]
 }
 
 def check_answer(user_answer, correct_answer):
